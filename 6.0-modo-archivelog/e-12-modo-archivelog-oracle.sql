@@ -22,8 +22,8 @@ Prompt C. Configurando parámetros
 alter system set log_archive_max_processes=2 scope=spfile;
 
 Prompt D. Configurando 2 copias, una en el disco 1 y otra en la FRA
-define proyecto_final_dir='/unam/bda/proyecto-final'
-alter system set log_archive_dest_1='LOCATION=/unam/bda/proyecto-final/archive-logs/FREE/disk_a MANDATORY' scope=spfile;
+define proyecto_final_dir='/unam/diplo-bd/proyecto-final'
+alter system set log_archive_dest_1='LOCATION=/unam/diplo-bd/proyecto-final/archive-logs/FREE/disk_a MANDATORY' scope=spfile;
 alter system set log_archive_dest_2='LOCATION=USE_DB_RECOVERY_FILE_DEST' scope=both;
 
 Prompt E. Configurando formato
@@ -51,7 +51,7 @@ Prompt J.  Provocando un archivado de redo logs
 alter system switch logfile;
 
 Prompt K.  Mostrando el contenido de los directorios
-define disk_route = '/unam/bda/proyecto-final/archive-logs/FREE/disk_*'
+define disk_route = '/unam/diplo-bd/proyecto-final/archive-logs/FREE/disk_*'
 !ls -lh &disk_route
 
 Pause Presiona enter para continuar...
