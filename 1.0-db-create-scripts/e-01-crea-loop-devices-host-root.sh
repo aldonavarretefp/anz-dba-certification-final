@@ -5,14 +5,14 @@
 set -e
 
 #!/bin/bash
-dba_proyecto_final_dir="/unam/bda/proyecto-final"
+diplo_proyecto_final_dir="/unam/diplo-bd/proyecto-final"
 
-echo "1. Creando directorio disk-images"
+echo "1. Creando directorio disk-images-proyecto-final"
 
-mkdir -p "${dba_proyecto_final_dir}/disk-images"
+mkdir -p "${diplo_proyecto_final_dir}/disk-images-proyecto-final"
 
 echo "2,3. Crear archivos img"
-cd "${dba_proyecto_final_dir}/disk-images"
+cd "${diplo_proyecto_final_dir}/disk-images-proyecto-final"
 
 if [ -f disk1.img ]; then
     echo "El archivo disk1.img ya existe"
@@ -52,14 +52,14 @@ mkfs.ext4 disk3.img
 
 echo "7. Creando directorios para usarse como puntos de montaje"
 
-mkdir -p "${dba_proyecto_final_dir}/disk/d01"
-mkdir -p "${dba_proyecto_final_dir}/disk/d02"
-mkdir -p "${dba_proyecto_final_dir}/disk/d03"
+mkdir -p "${diplo_proyecto_final_dir}/disk/d01"
+mkdir -p "${diplo_proyecto_final_dir}/disk/d02"
+mkdir -p "${diplo_proyecto_final_dir}/disk/d03"
 
 echo "Editando archivo /etc/fstab"
 
 echo "# loop devices para el el proyecto" >> /etc/fstab
-echo "${dba_proyecto_final_dir}/disk-images/disk1.img ${dba_proyecto_final_dir}/disk/d01 auto loop 0 0" >> /etc/fstab
-echo "${dba_proyecto_final_dir}/disk-images/disk2.img ${dba_proyecto_final_dir}/disk/d02 auto loop 0 0" >> /etc/fstab
-echo "${dba_proyecto_final_dir}/disk-images/disk3.img ${dba_proyecto_final_dir}/disk/d03 auto loop 0 0" >> /etc/fstab
+echo "${diplo_proyecto_final_dir}/disk-images-proyecto-final/disk1.img ${diplo_proyecto_final_dir}/disk/d01 auto loop 0 0" >> /etc/fstab
+echo "${diplo_proyecto_final_dir}/disk-images-proyecto-final/disk2.img ${diplo_proyecto_final_dir}/disk/d02 auto loop 0 0" >> /etc/fstab
+echo "${diplo_proyecto_final_dir}/disk-images-proyecto-final/disk3.img ${diplo_proyecto_final_dir}/disk/d03 auto loop 0 0" >> /etc/fstab
 echo "Listo!"

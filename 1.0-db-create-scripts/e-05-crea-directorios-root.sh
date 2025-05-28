@@ -7,7 +7,7 @@ set -e
 
 echo "Verificando existencia de directorio para data files"
 
-dba_proyecto_final_dir="/unam/bda/proyecto-final"
+diplo_proyecto_final_dir="/unam/diplo-bd/proyecto-final"
 
 if [ -d "/opt/oracle/oradata/${ORACLE_SID^^}" ]; then
   echo "Directorio para data files ya existe, se omite creación"
@@ -35,11 +35,11 @@ fi;
 echo "3. Creando directorios para Redo Logs y control files"
 #--TODO
 for i in $(seq 1 3); do
-  if [ -d "${dba_proyecto_final_dir}/disk/d0${i}/app/oracle/oradata/${ORACLE_SID^^}" ]; then
+  if [ -d "${diplo_proyecto_final_dir}/disk/d0${i}/app/oracle/oradata/${ORACLE_SID^^}" ]; then
     echo "Directorio para control files y Redo Logs ya existe, se omite creación"
   else
     echo "Creando directorios para control files y Redo Logs"
-    cd ${dba_proyecto_final_dir}/disk/d0${i}
+    cd ${diplo_proyecto_final_dir}/disk/d0${i}
     mkdir -p app/oracle/oradata/${ORACLE_SID^^}
     chown -R oracle:oinstall app
     chmod -R 750 app
@@ -56,17 +56,17 @@ done
 # rm -f /opt/oracle/oradata/${ORACLE_SID^^}/pdbseed/control*.ctl
 # rm -f /opt/oracle/oradata/${ORACLE_SID^^}/pdbseed/redo*.log
 
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/control*.ctl
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/redo*.log
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/*.dbf
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/control*.ctl
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/redo*.log
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/*.dbf
 
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/*.dbf
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/control*.ctl
-# rm -f ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/redo*.log
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/*.dbf
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/control*.ctl
+# rm -f ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata/${ORACLE_SID^^}/pdbseed/redo*.log
 #TODO--
 
 echo "5. Mostrando directorio de data files"
 ls -l /opt/oracle/oradata
 
 echo "Mostrando directorios para control files y Redo Logs"
-ls -l ${dba_proyecto_final_dir}/disk/d0*/app/oracle/oradata
+ls -l ${diplo_proyecto_final_dir}/disk/d0*/app/oracle/oradata

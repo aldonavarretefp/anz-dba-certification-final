@@ -6,7 +6,7 @@
 set -e
 export ORACLE_SID=free
 
-dba_proyecto_final_dir="/unam/bda/proyecto-final"
+dba_proyecto_final_dir="/unam/diplo-bd/proyecto-final"
 
 echo "Verifica si la carpeta fast-recovery-area ya existe..."
 if [ ! -d "${dba_proyecto_final_dir}/fast-recovery-area" ]; then

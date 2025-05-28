@@ -6,7 +6,7 @@
 set -e
 
 #!/bin/bash
-dba_proyecto_final_dir="/unam/bda/proyecto-final"
+dba_proyecto_final_dir="/unam/diplo-bd/proyecto-final"
 
 echo "1. Creando los directorios de los discos duros..."  
 
