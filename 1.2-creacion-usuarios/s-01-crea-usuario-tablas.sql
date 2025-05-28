@@ -1,46 +1,110 @@
---@Autor: Aldo Yael Navarrete Zamora, Diego Ignacio Núñez Hernández
---@Fecha creación:  08/12/2024
---@Descripción:     Crea un usuario para crear las tablas del proyecto
+/*====================================================================
+  CREACIÓN DE USUARIOS Y ASIGNACIÓN DE CUOTAS
+  Proyecto    : Travesía Vacacional
+  Autor       : Aldo Navarrete
+  Fecha       : 28-may-2025
+  Descripción : Dos usuarios por módulo, cada uno con cuota ilimitada
+                en TODOS los tablespaces que le corresponden.
+  ====================================================================*/
 
-connect sys/system1 as sysdba
+CONNECT sys/system1 AS SYSDBA;
+WHENEVER SQLERROR EXIT ROLLBACK;
+SET SERVEROUTPUT ON;
 
-whenever sqlerror exit rollback
-set serveroutput on
+/*====================================================================
+  MÓDULO 1  (CENTROS, EMPLEADOS, CERTIFICACIONES, ACTIVIDADES)
+====================================================================*/
+ALTER SESSION SET CONTAINER = tvac_modulo_1;  --  ← cambia al PDB real
 
------------------------------------ Modulo 1. Usuarios y Transacciones -----------------------------------
-alter session set container = naproynu_modulo_1;
+PROMPT 1. Creando usuarios del MÓDULO 1
+----------------------------------------
+-- Usuario principal (lectura / escritura)
+DROP USER IF EXISTS tvac_mod1_app CASCADE;
+CREATE USER tvac_mod1_app
+  IDENTIFIED BY tvac_mod1_app
+  DEFAULT TABLESPACE TS_CENTROS_DATA
+  QUOTA UNLIMITED ON users;
 
-Prompt 1. Creando usuario USERMOD1
-drop user if exists usermod1 cascade;
-create user usermod1 identified by usermod1 quota unlimited on users;
+-- Usuario secundario (p.ej. reportes / mantenimiento)
+DROP USER IF EXISTS tvac_mod1_rep CASCADE;
+CREATE USER tvac_mod1_rep
+  IDENTIFIED BY tvac_mod1_rep
+  DEFAULT TABLESPACE TS_CENTROS_DATA
+  QUOTA UNLIMITED ON users;
 
-alter user usermod1 quota unlimited on TS_USERS_DATA;
-alter user usermod1 quota unlimited on TS_USERS_BLOB;
-alter user usermod1 quota unlimited on TS_USERS_INDEX;
-alter user usermod1 quota unlimited on TS_PAYMENTS_DATA;
-alter user usermod1 quota unlimited on TS_PAYMENTS_INDEX;
-alter user usermod1 quota unlimited on TS_PAYMENTS_HISTORY;
-alter user usermod1 quota unlimited on TS_LOCATION_DATA;
-alter user usermod1 quota unlimited on TS_LOCATION_INDEX;
+/*—  Cuotas para TODOS los tablespaces del Módulo 1 —*/
+BEGIN
+  FOR t IN (
+    SELECT tablespace_name ts
+      FROM dba_tablespaces
+     WHERE tablespace_name IN (
+            'TS_CENTROS_DATA','TS_CENTROS_IDX',
+            'TS_EMPLEADOS_DATA','TS_EMPLEADOS_IDX',
+            'TS_CERTIFICACIONES_DATA','TS_CERTIFICACIONES_IDX','TS_CERTIFICACIONES_BLOB',
+            'TS_ACTIVIDADES_DATA','TS_ACTIVIDADES_IDX','TS_ACTIVIDADES_BLOB'
+          )
+  ) LOOP
+    EXECUTE IMMEDIATE 'ALTER USER tvac_mod1_app QUOTA UNLIMITED ON '||t.ts;
+    EXECUTE IMMEDIATE 'ALTER USER tvac_mod1_rep QUOTA UNLIMITED ON '||t.ts;
+  END LOOP;
+END;
+/
 
-alter user usermod1 default tablespace users;
+/*—  Privilegios básicos —*/
+GRANT CREATE SESSION,
+      CREATE TABLE,
+      CREATE SEQUENCE,
+      CREATE PROCEDURE
+TO tvac_mod1_app;
 
-grant create session, create table, create procedure, create sequence to usermod1;
+GRANT CREATE SESSION TO tvac_mod1_rep;     -- solo conecta
+GRANT SELECT ANY DICTIONARY TO tvac_mod1_rep;  -- ejemplo de permisos de reporte
 
------------------------------------ Modulo 2. Proveedores y Servicios -----------------------------------
-alter session set container = naproynu_modulo_2;
 
-Prompt 2. Creando usuario USERMOD2
-drop user if exists usermod2 cascade;
-create user usermod2 identified by usermod2 quota unlimited on users;
+/*====================================================================
+  MÓDULO 2  (CLIENTES, MEMBRESÍAS, VISITAS, ACTIVIDAD PARTIC.)
+====================================================================*/
+ALTER SESSION SET CONTAINER = tvac_modulo_2;  --  ← cambia al PDB real
 
-alter user usermod2 quota unlimited on TS_DISH_DATA;
-alter user usermod2 quota unlimited on TS_DISH_BLOB;
-alter user usermod2 quota unlimited on TS_DISH_INDEX;
-alter user usermod2 quota unlimited on TS_ORDERS_DATA;
-alter user usermod2 quota unlimited on TS_ORDERS_BLOB;
-alter user usermod2 quota unlimited on TS_ORDERS_INDEX;
+PROMPT 2. Creando usuarios del MÓDULO 2
+----------------------------------------
+DROP USER IF EXISTS tvac_mod2_app CASCADE;
+CREATE USER tvac_mod2_app
+  IDENTIFIED BY tvac_mod2_app
+  DEFAULT TABLESPACE TS_CLIENTES_DATA
+  QUOTA UNLIMITED ON users;
 
-alter user usermod2 default tablespace users;
+DROP USER IF EXISTS tvac_mod2_rep CASCADE;
+CREATE USER tvac_mod2_rep
+  IDENTIFIED BY tvac_mod2_rep
+  DEFAULT TABLESPACE TS_CLIENTES_DATA
+  QUOTA UNLIMITED ON users;
 
-grant create session, create table, create procedure, create sequence to usermod2;
+/*—  Cuotas para TODOS los tablespaces del Módulo 2 —*/
+BEGIN
+  FOR t IN (
+    SELECT tablespace_name ts
+      FROM dba_tablespaces
+     WHERE tablespace_name IN (
+            'TS_CLIENTES_DATA','TS_CLIENTES_IDX',
+            'TS_MEMBRESIAS_DATA','TS_MEMBRESIAS_IDX',
+            'TS_VISITAS_DATA','TS_VISITAS_IDX',
+            'TS_ACTPART_DATA','TS_ACTPART_IDX'
+          )
+  ) LOOP
+    EXECUTE IMMEDIATE 'ALTER USER tvac_mod2_app QUOTA UNLIMITED ON '||t.ts;
+    EXECUTE IMMEDIATE 'ALTER USER tvac_mod2_rep QUOTA UNLIMITED ON '||t.ts;
+  END LOOP;
+END;
+/
+
+/*—  Privilegios básicos —*/
+GRANT CREATE SESSION,
+      CREATE TABLE,
+      CREATE SEQUENCE,
+      CREATE PROCEDURE
+TO tvac_mod2_app;
+
+GRANT CREATE SESSION TO tvac_mod2_rep;
+GRANT SELECT ANY DICTIONARY TO tvac_mod2_rep;  -- ejemplo de permisos de reporte
+
