@@ -17,6 +17,7 @@ SET SERVEROUTPUT ON;
 ALTER SESSION SET CONTAINER = tvac_modulo_1;  --  ← cambia al PDB real
 
 PROMPT 1. Creando usuarios del MÓDULO 1
+
 ----------------------------------------
 -- Usuario principal (lectura / escritura)
 DROP USER IF EXISTS tvac_mod1_app CASCADE;
