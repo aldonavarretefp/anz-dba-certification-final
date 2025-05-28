@@ -1,0 +1,162 @@
+/*-----------------------------------------------------------------
+  TRAVESÍA VACACIONAL  –  MÓDULO 1
+-----------------------------------------------------------------*/
+SET DEFINE OFF;
+WHENEVER SQLERROR EXIT ROLLBACK;
+
+/*==============================================================
+  1.  ASOCIACION
+==============================================================*/
+INSERT INTO ASOCIACION VALUES
+ ('AS001','AVENTURARTE','CAMINO REAL 1','VALLE','CENTRO','555-1000');
+INSERT INTO ASOCIACION VALUES
+ ('AS002','MONTAÑA VIVA','SENDERO 2','CUMBRES','ALTOS','555-2000');
+INSERT INTO ASOCIACION VALUES
+ ('AS003','ECOPLAY','VERDE 4','BOSQUE','NORTE','555-3000');
+INSERT INTO ASOCIACION VALUES
+ ('AS004','BLUE WATER','MAR 5','PLAYA','SUR','555-4000');
+INSERT INTO ASOCIACION VALUES
+ ('AS005','SOL Y ARENA','COSTA 6','BAHÍA','ESTE','555-5000');
+
+/*==============================================================
+  2.  CENTRO_VACACIONAL
+==============================================================*/
+INSERT INTO CENTRO_VACACIONAL VALUES
+ ('CE001',19.1200,-99.2300,'AS001');
+INSERT INTO CENTRO_VACACIONAL VALUES
+ ('CE002',28.5000,-100.5000,'AS002');
+INSERT INTO CENTRO_VACACIONAL VALUES
+ ('CE003',21.8800,-99.9000,'AS003');
+
+/*==============================================================
+  3.  EMPLEADO
+==============================================================*/
+INSERT INTO EMPLEADO VALUES
+ ('E001','LAURA','MARTÍNEZ','GÓMEZ','555-1111','AS001',NULL);
+INSERT INTO EMPLEADO VALUES
+ ('E002','CARLOS','RAMOS','DÍAZ','555-1112','AS001','E001');
+INSERT INTO EMPLEADO VALUES
+ ('E003','MARÍA','LARA','OCHOA','555-1113','AS002','E001');
+INSERT INTO EMPLEADO VALUES
+ ('E004','JORGE','SUÁREZ','PÉREZ','555-1114','AS003','E003');
+INSERT INTO EMPLEADO VALUES
+ ('E005','ANA','DELGADO','RUIZ','555-1115','AS003',NULL);
+
+/*==============================================================
+  4.  LIDER
+==============================================================*/
+INSERT INTO LIDER VALUES ('E001',10,'EXCURSIONISMO');
+INSERT INTO LIDER VALUES ('E002', 6,'CAMPISMO');
+INSERT INTO LIDER VALUES ('E003', 8,'MONTAÑISMO');
+
+/*==============================================================
+  5.  CENTRO_LIDER
+==============================================================*/
+INSERT INTO CENTRO_LIDER VALUES ('CE001','E001');
+INSERT INTO CENTRO_LIDER VALUES ('CE002','E003');
+INSERT INTO CENTRO_LIDER VALUES ('CE003','E002');
+
+/*==============================================================
+  6.  CERTIFICACION
+==============================================================*/
+INSERT INTO CERTIFICACION VALUES ('C001','AS001','GUÍA OUTDOOR NIVEL I');
+INSERT INTO CERTIFICACION VALUES ('C002','AS002','SOCORRISMO EN CAMPO');
+INSERT INTO CERTIFICACION VALUES ('C003','AS003','TÉCNICAS DE ESCALADA');
+
+/*==============================================================
+  7.  CERTIFICACION_VERSION
+==============================================================*/
+INSERT INTO CERTIFICACION_VERSION VALUES
+ (1,1,HEXTORAW('ABCD'),'BÁSICO','INTRODUCCIÓN','C001');
+INSERT INTO CERTIFICACION_VERSION VALUES
+ (2,2,HEXTORAW('ABCD'),'INTERMEDIO','RESCATE','C002');
+INSERT INTO CERTIFICACION_VERSION VALUES
+ (3,1,HEXTORAW('ABCD'),'AVANZADO','EQUIPO PRO','C003');
+
+/*==============================================================
+  8.  LIDER_CERTIFICACION
+==============================================================*/
+INSERT INTO LIDER_CERTIFICACION VALUES
+ ('E001',1,TO_TIMESTAMP('2023-05-01 10:00:00','YYYY-MM-DD HH24:MI:SS'),'V1');
+INSERT INTO LIDER_CERTIFICACION VALUES
+ ('E002',2,TO_TIMESTAMP('2024-01-15 09:00:00','YYYY-MM-DD HH24:MI:SS'),'V2');
+INSERT INTO LIDER_CERTIFICACION VALUES
+ ('E003',3,TO_TIMESTAMP('2022-11-20 08:00:00','YYYY-MM-DD HH24:MI:SS'),'V1');
+
+/*==============================================================
+  9.  TIPO_DEPORTE   |  TIPO_JUEGO
+==============================================================*/
+INSERT INTO TIPO_DEPORTE VALUES
+ ('TD001','20 H','RAQUETA','TENIS'),
+ ('TD002','15 H','BALÓN','FÚTBOL'),
+ ('TD003','10 H','CASCO','ESCALADA'),
+ ('TD004','12 H','REMO','KAYAK'),
+ ('TD005','18 H','GUANTES','BOX');
+
+INSERT INTO TIPO_JUEGO VALUES
+ ('TJ001','BÚSQUEDA DEL TESORO','JUEGO DE PISTA',12),
+ ('TJ002','CAPTURA LA BANDERA','JUEGO DE ESTRATEGIA',10),
+ ('TJ003','TRIVIA OUTDOOR','PREGUNTAS CULT-GEN',20),
+ ('TJ004','PILLA-PILLA','JUEGO ACTIVO',15),
+ ('TJ005','CARRERA DE SACOS','JUEGO FÍSICO',8);
+
+/*==============================================================
+ 10.  ACTIVIDAD  (CON TIMESTAMP)
+==============================================================*/
+INSERT INTO ACTIVIDAD VALUES
+ ('AC001',
+  TO_TIMESTAMP('2025-07-01 14:00:00','YYYY-MM-DD HH24:MI:SS'),
+  TO_TIMESTAMP('2025-07-01 10:00:00','YYYY-MM-DD HH24:MI:SS'),
+  '500','TARDE DE KAYAK','CE001','E001');
+
+INSERT INTO ACTIVIDAD VALUES
+ ('AC002',
+  TO_TIMESTAMP('2025-07-03 13:00:00','YYYY-MM-DD HH24:MI:SS'),
+  TO_TIMESTAMP('2025-07-03 09:00:00','YYYY-MM-DD HH24:MI:SS'),
+  '300','CLÍNICA DE ESCALADA','CE002','E003');
+
+INSERT INTO ACTIVIDAD VALUES
+ ('AC003',
+  TO_TIMESTAMP('2025-07-05 08:00:00','YYYY-MM-DD HH24:MI:SS'),
+  TO_TIMESTAMP('2025-07-04 20:00:00','YYYY-MM-DD HH24:MI:SS'),
+  '450','CAMPAMENTO NOCTURNO','CE001','E002');
+
+INSERT INTO ACTIVIDAD VALUES
+ ('AC004',
+  TO_TIMESTAMP('2025-07-06 13:00:00','YYYY-MM-DD HH24:MI:SS'),
+  TO_TIMESTAMP('2025-07-06 07:00:00','YYYY-MM-DD HH24:MI:SS'),
+  '200','RUTA DE SENDERISMO','CE003','E002');
+
+INSERT INTO ACTIVIDAD VALUES
+ ('AC005',
+  TO_TIMESTAMP('2025-07-07 12:00:00','YYYY-MM-DD HH24:MI:SS'),
+  TO_TIMESTAMP('2025-07-07 10:00:00','YYYY-MM-DD HH24:MI:SS'),
+  '150','JUEGOS COOPERATIVOS','CE003','E001');
+
+/*==============================================================
+ 11.  IMAGEN_ACTIVIDAD
+==============================================================*/
+INSERT INTO IMAGEN_ACTIVIDAD VALUES
+ ('IA001',EMPTY_BLOB(),'AC001');
+INSERT INTO IMAGEN_ACTIVIDAD VALUES
+ ('IA002',EMPTY_BLOB(),'AC003');
+INSERT INTO IMAGEN_ACTIVIDAD VALUES
+ ('IA003',EMPTY_BLOB(),'AC005');
+
+/*==============================================================
+ 12.  ACTIVIDAD_CAMPAMENTO / ACTIVIDAD_DEPORTE / ACTIVIDAD_JUEGO
+==============================================================*/
+INSERT INTO ACTIVIDAD_CAMPAMENTO VALUES
+ ('AC003','12 H',-99.2500,19.1500,'LAGO AZUL S/N','BOSQUE','VALLE');
+INSERT INTO ACTIVIDAD_CAMPAMENTO VALUES
+ ('AC004','6 H', -99.9000,21.8000,'SIERRA VERDE 2','MONTAÑA','CUMBRES');
+
+INSERT INTO ACTIVIDAD_DEPORTE VALUES
+ ('AC001','KAYAK','DESCENSO RÍO','TD004');
+INSERT INTO ACTIVIDAD_DEPORTE VALUES
+ ('AC002','ESCALADA','ROCA NATURAL','TD003');
+
+INSERT INTO ACTIVIDAD_JUEGO VALUES
+ ('AC005','CAPTURA LA BANDERA','JUEGO POR EQUIPOS','TJ002');
+
+COMMIT;
