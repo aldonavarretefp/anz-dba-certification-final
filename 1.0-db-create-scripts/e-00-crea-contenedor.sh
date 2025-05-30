@@ -1,5 +1,5 @@
-# Autor: Navarrete Zamora Aldo Yael, Nuñez Hernandez Diego Ignacio
-# Fecha: 11-11-2024
+# Autor: Navarrete Zamora Aldo Yael
+# Fecha: 
 # Descripción: Script para crear un contenedor con la imagen de Oracle Linux 7.9 y Oracle Database 19c
 
 #!/bin/bash

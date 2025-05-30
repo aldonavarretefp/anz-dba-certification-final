@@ -8,18 +8,19 @@ set -e
 #!/bin/bash
 dba_proyecto_final_dir="/unam/diplo-bd/proyecto-final"
 
-echo "1. Creando los directorios de los discos duros..."  
+echo "1. Creando los 10 directorios de los discos duros..."  
 
-for i in {1..9}
+for i in {1..10}
 do
-    mkdir -p "${dba_proyecto_final_dir}/d1$i"
+    mkdir -p "${dba_proyecto_final_dir}/d$i"
 done
 
-mkdir -p "${dba_proyecto_final_dir}/d20"
+echo "listando"
+
+ls -lh "${dba_proyecto_final_dir}"
 
 echo '1.1. Cambiando los permisos para que se pueda acceder a los directorios'
-chmod 777 "${dba_proyecto_final_dir}/d1*"
-chmod 777 "${dba_proyecto_final_dir}/d20"
+chmod 777 "${dba_proyecto_final_dir}/d*"
 
 echo "2. Mostrando la creación de los directorios"
 ls -l "${dba_proyecto_final_dir}"
