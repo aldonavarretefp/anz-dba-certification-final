@@ -1,3 +1,5 @@
+
+col "Ruta del Datafile" format a30;
 SELECT 
     d.tablespace_name "Tablespace",
     d.file_name "Ruta del Datafile",
@@ -12,8 +14,8 @@ SELECT
     END "Tamaño Máximo (MB)",
     d.status "Estado"
 FROM 
-    dba_data_files d,
-    dba_free_space e
+    cdb_data_files d,
+    cdb_free_space e
 WHERE 
     d.file_id = e.file_id(+)
 GROUP BY 

@@ -13,6 +13,10 @@ GROUP BY
 ORDER BY 
     pdb_name, size_mb DESC;
 
+
+
+col pdb_name format a20;
+
 SELECT 
     c.name AS pdb_name,
     s.segment_type,
