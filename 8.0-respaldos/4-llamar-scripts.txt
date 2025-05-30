@@ -1,0 +1,1 @@
+rman target / @/path/to/file.txt

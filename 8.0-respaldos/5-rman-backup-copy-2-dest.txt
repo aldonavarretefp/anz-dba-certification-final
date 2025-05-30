@@ -1,0 +1,25 @@
+BACKUP AS COPY DATABASE PLUS ARCHIVELOG 
+  COPY 1 FORMAT '/unam/diplo-bd/proyecto-final/fast-recovery-area/backups/copy/backup_copy_%U'
+  COPY 2 FORMAT '/unam/diplo-bd/proyecto-final/backups/copy/backup_copy_%U';
+
+
+backup database plus archivelog tag FULL_BK_1;
+
+backup as backupset copies 2 database plus archivelog tag FULL_BK_1
+format '/unam/diplo-bd/proyecto-final/fast-recovery-area/backups/copy/backup_copy_%U', '/unam/diplo-bd/proyecto-final/backups/copy/backup_copy_%U';
+
+
+COPY
+RMAN> configure channel device type disk format '/unam/diplo-bd/proyecto-final/fast-recovery-area/backups/copy/%d_DB_%u_%s_%p', '/unam/diplo-bd/proyecto-final/backups/copy/%d_DB_%u_%s_%p';
+RMAN> CONFIGURE DEVICE TYPE DISK PARALLELISM 1;
+RMAN> CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 2;
+RMAN> CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 2;
+RMAN> backup as copy database plus archivelogs;
+
+
+copies
+BACKUP DEVICE TYPE DISK COPIES 3 DATAFILE 7 FORMAT '/unam/diplo-bd/proyecto-final/backups/copy/%U_%c', '/unam/diplo-bd/proyecto-final/fast-recovery-area/backups/copy/%U_%c';
+
+RESPALDO INCREMENTAL
+backup incremental level 0 database tag bkI_0;
+backup incremental level 1 database tag bkI_D1;

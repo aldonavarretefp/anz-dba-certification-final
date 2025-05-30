@@ -5,7 +5,7 @@
 whenever sqlerror exit rollback;
 
 Prompt 0. Creando spool
-spool anz-e-01-habilitar-fra-ordinario.txt
+spool anz-7-01-habilitar-fra-ordinario.txt
 
 Prompt 1. Conectando como sys empleando archivo de passwords
 
@@ -13,8 +13,8 @@ connect sys/system1 as sysdba;
 
 Prompt 2. Habilitando la FRA...
 alter system set db_recovery_file_dest_size = 10G scope=both;
-alter system set db_recovery_file_dest = '/unam/bda/proyecto-final/fast-recovery-area' scope=both;
-alter system set db_flashback_retention_target = 1440 scope=both; --Este valor es en minutos
+alter system set db_recovery_file_dest='/unam/diplo-bd/proyecto-final/fast-recovery-area' scope=both;
+alter system set db_flashback_retention_target = 4320 scope=both; --Este valor es en minutos
 
 Prompt 3. Reiniciando la instancia para que los cambios tengan efecto...
 shutdown immediate;

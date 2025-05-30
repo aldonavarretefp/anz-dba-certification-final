@@ -12,7 +12,7 @@ Prompt creando PDB 1...
 create pluggable database tvac_modulo_1
   admin user anz_admin_dnh identified by anz_admin_dnh
   path_prefix = '/opt/oracle/oradata/FREE'
-  file_name_convert = ('/pdbseed/', '/naproynu_modulo_1/');
+  file_name_convert = ('/pdbseed/', '/tvac_modulo_1/');
 
 Prompt abrir la PDB 1...
 alter pluggable database tvac_modulo_1 open;

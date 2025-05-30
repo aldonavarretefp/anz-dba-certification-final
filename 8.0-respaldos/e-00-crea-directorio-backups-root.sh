@@ -6,7 +6,7 @@
 set -e
 export ORACLE_SID=free
 
-backups_dir="/unam/bda/proyecto-final/backups"
+backups_dir="/unam/diplo-bd/proyecto-final/backups"
 
 echo "------------------------Validando la existencia de directorio para backups--------------------------"
 
@@ -14,9 +14,8 @@ if [ -d $backups_dir ]; then
   echo "Directorio de backups ya existe"
 else
   #Crea el directorio backups
-  echo "Creando carpeta para guardar los backups de la base boorproy..."
-  echo ""
-  cd /unam/bda/proyecto-final
+  echo "Creando carpeta para guardar los backups de la base..."
+  cd /unam/diplo-bd/proyecto-final
   mkdir backups
   #Se cambia el dueño a oracle y se cambian los permisos a la carpeta MORBDA2 a 750:
   #7: todos los permisos para el usuario propietario (oracle)

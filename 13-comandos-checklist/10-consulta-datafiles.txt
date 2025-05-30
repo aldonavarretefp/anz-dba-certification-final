@@ -1,0 +1,28 @@
+SELECT 
+    d.tablespace_name "Tablespace",
+    d.file_name "Ruta del Datafile",
+    ROUND(d.bytes/1024/1024,2) "Tamaño (MB)",
+    ROUND(NVL(sum(e.bytes)/1024/1024,0),2) "Espacio Libre (MB)",
+    ROUND((d.bytes-NVL(sum(e.bytes),0))/1024/1024,2) "Espacio Usado (MB)",
+    ROUND((d.bytes-NVL(sum(e.bytes),0))/d.bytes*100,2) "% Usado",
+    d.autoextensible "Autoextensible",
+    CASE WHEN d.autoextensible = 'YES' 
+         THEN ROUND(d.maxbytes/1024/1024,2) 
+         ELSE NULL 
+    END "Tamaño Máximo (MB)",
+    d.status "Estado"
+FROM 
+    dba_data_files d,
+    dba_free_space e
+WHERE 
+    d.file_id = e.file_id(+)
+GROUP BY 
+    d.tablespace_name,
+    d.file_name,
+    d.bytes,
+    d.autoextensible,
+    d.maxbytes,
+    d.status
+ORDER BY 
+    d.tablespace_name,
+    d.file_name;

@@ -1,76 +1,92 @@
 /* ============================================================
-   1. CLIENTES  (CLIENTE, INVITADO, AUTO_CLIENTE)
-   ============================================================ */
+  1. CLIENTES  (CLIENTE, INVITADO, AUTO_CLIENTE)
+  ============================================================ */
+DROP TABLESPACE TS_CLIENTES_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_CLIENTES_IDX INCLUDING CONTENTS AND DATAFILES;
+
+DROP TABLESPACE TS_MEMBRESIAS_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_MEMBRESIAS_IDX INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_VISITAS_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_VISITAS_IDX INCLUDING CONTENTS AND DATAFILES;
+
+DROP TABLESPACE TS_ACTPART_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_ACTPART_IDX INCLUDING CONTENTS AND DATAFILES;
+
+
+
 CREATE TABLESPACE TS_CLIENTES_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d01/TS_CLIENTES_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d02/TS_CLIENTES_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d01/TS_CLIENTES_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d02/TS_CLIENTES_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_CLIENTES_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d01/TS_CLIENTES_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d02/TS_CLIENTES_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d01/TS_CLIENTES_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d02/TS_CLIENTES_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 /* ============================================================
-   2. MEMBRESÍAS  (CLIENTE_MEMBRESIA, HISTORIAL_MEMBRESIA, ESTADO_MEMBRESIA, TARJETA)
-   ============================================================ */
+  2. MEMBRESÍAS  (CLIENTE_MEMBRESIA, HISTORIAL_MEMBRESIA, ESTADO_MEMBRESIA, TARJETA)
+  ============================================================ */
+
 CREATE TABLESPACE TS_MEMBRESIAS_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d03/TS_MEMBRESIAS_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d04/TS_MEMBRESIAS_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d03/TS_MEMBRESIAS_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d04/TS_MEMBRESIAS_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_MEMBRESIAS_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d03/TS_MEMBRESIAS_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d04/TS_MEMBRESIAS_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d03/TS_MEMBRESIAS_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d04/TS_MEMBRESIAS_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 /* ============================================================
-   3. VISITAS  (VISITA_CLIENTE, VISITA_INVITADO)
-   ============================================================ */
+  3. VISITAS  (VISITA_CLIENTE, VISITA_INVITADO)
+  ============================================================ */
+
+
 CREATE TABLESPACE TS_VISITAS_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d05/TS_VISITAS_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d06/TS_VISITAS_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d05/TS_VISITAS_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d06/TS_VISITAS_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_VISITAS_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d05/TS_VISITAS_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d06/TS_VISITAS_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d05/TS_VISITAS_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d06/TS_VISITAS_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 /* ============================================================
-   4. ACTIVIDAD PARTICIPACIÓN  (ACTIVIDAD_PARTICIPACION)
-   ============================================================ */
+  4. ACTIVIDAD PARTICIPACIÓN  (ACTIVIDAD_PARTICIPACION)
+  ============================================================ */
+
 CREATE TABLESPACE TS_ACTPART_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d07/TS_ACTPART_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d08/TS_ACTPART_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d07/TS_ACTPART_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d08/TS_ACTPART_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_ACTPART_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d07/TS_ACTPART_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d08/TS_ACTPART_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d07/TS_ACTPART_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d08/TS_ACTPART_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
-

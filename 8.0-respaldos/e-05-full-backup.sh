@@ -2,9 +2,9 @@
 set -e
 
 # Variables
-mejor_ruta_para_guardar_log="/unam/bda/proyecto-final/logs" # TODO: Cambiar por la mejor ruta para guardar logs
-path_to_daily_backup_script="/unam/bda/proyecto-final/dba-final-project-anz-dnh/1.3.12-planeacion-esquema-respaldos/e-02-rman-daily-backup-oracle.sh"
-path_to_weekly_backup_script="/unam/bda/proyecto-final/dba-final-project-anz-dnh/1.3.12-planeacion-esquema-respaldos/e-03-rman-weekly-backup-oracle.sh"
+mejor_ruta_para_guardar_log="/unam/proyecto-final/proyecto-final/logs" # TODO: Cambiar por la mejor ruta para guardar logs
+path_to_daily_backup_script="/unam/proyecto-final/proyecto-final/dba-final-project-anz-dnh/1.3.12-planeacion-esquema-respaldos/e-02-rman-daily-backup-oracle.sh"
+path_to_weekly_backup_script="/unam/proyecto-final/proyecto-final/dba-final-project-anz-dnh/1.3.12-planeacion-esquema-respaldos/e-03-rman-weekly-backup-oracle.sh"
 
 # Crear directorio de logs si no existe
 if [ ! -d "$mejor_ruta_para_guardar_log" ]; then

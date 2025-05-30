@@ -43,7 +43,7 @@ startup nomount;
 exit;
 EOF
 
-alter system set control_files='/unam/bda/proyecto-final/fast-recovery-area/FREE/controlfile/o1_mf_mol08goz_.ctl','/unam/bda/proyecto-final/disk/d01/app/oracle/oradata/FREE/control01.ctl','/unam/bda/proyecto-final/disk/d02/app/oracle/oradata/FREE/control02.ctl' scope=spfile;
+alter system set control_files='/unam/diplo-bd/proyecto-final/fast-recovery-area/FREE/controlfile/o1_mf_mol08goz_.ctl','/unam/diplo-bd/proyecto-final/disk/d01/app/oracle/oradata/FREE/control01.ctl','/unam/diplo-bd/proyecto-final/disk/d02/app/oracle/oradata/FREE/control02.ctl' scope=spfile;
 
 
 

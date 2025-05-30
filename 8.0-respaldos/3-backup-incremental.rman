@@ -1,0 +1,3 @@
+run {
+    backup incremental level 0 database;
+}

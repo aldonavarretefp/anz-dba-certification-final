@@ -1,57 +1,69 @@
+/* Drop statements to make the script idempotent */
+DROP TABLESPACE TS_CENTROS_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_CENTROS_IDX INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_EMPLEADOS_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_EMPLEADOS_IDX INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_CERTIFICACIONES_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_CERTIFICACIONES_IDX INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_CERTIFICACIONES_BLOB INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_ACTIVIDADES_DATA INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_ACTIVIDADES_IDX INCLUDING CONTENTS AND DATAFILES;
+DROP TABLESPACE TS_ACTIVIDADES_BLOB INCLUDING CONTENTS AND DATAFILES;
+
 /* ============================================================
-   TABLAS  –  CENTROS
-   ============================================================ */
+  TABLAS  –  CENTROS
+  ============================================================ */
 CREATE TABLESPACE TS_CENTROS_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d01/TS_CENTROS_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d02/TS_CENTROS_DATA02.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d03/TS_CENTROS_DATA03.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d01/TS_CENTROS_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d02/TS_CENTROS_DATA02.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d03/TS_CENTROS_DATA03.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_CENTROS_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d01/TS_CENTROS_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d02/TS_CENTROS_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d01/TS_CENTROS_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d02/TS_CENTROS_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 /* ============================================================
-   TABLAS  –  EMPLEADOS / LÍDERES
-   ============================================================ */
+  TABLAS  –  EMPLEADOS / LÍDERES
+  ============================================================ */
 CREATE TABLESPACE TS_EMPLEADOS_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d04/TS_EMPLEADOS_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d05/TS_EMPLEADOS_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d04/TS_EMPLEADOS_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d05/TS_EMPLEADOS_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_EMPLEADOS_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d04/TS_EMPLEADOS_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d05/TS_EMPLEADOS_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d04/TS_EMPLEADOS_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d05/TS_EMPLEADOS_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 /* ============================================================
-   TABLAS  –  CERTIFICACIONES
-   ============================================================ */
+  TABLAS  –  CERTIFICACIONES
+  ============================================================ */
 CREATE TABLESPACE TS_CERTIFICACIONES_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d06/TS_CERTIFICACIONES_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d07/TS_CERTIFICACIONES_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d06/TS_CERTIFICACIONES_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d07/TS_CERTIFICACIONES_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_CERTIFICACIONES_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d06/TS_CERTIFICACIONES_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d07/TS_CERTIFICACIONES_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d06/TS_CERTIFICACIONES_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d07/TS_CERTIFICACIONES_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 1G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;
@@ -62,20 +74,20 @@ CREATE BIGFILE TABLESPACE TS_CERTIFICACIONES_BLOB
   EXTENT MANAGEMENT LOCAL AUTOALLOCATE;
 
 /* ============================================================
-   TABLAS  –  ACTIVIDADES
-   ============================================================ */
+  TABLAS  –  ACTIVIDADES
+  ============================================================ */
 CREATE TABLESPACE TS_ACTIVIDADES_DATA
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d08/TS_ACTIVIDADES_DATA01.dbf' SIZE 200M,
-    '/unam/diplo-bd/proyecto-final/d09/TS_ACTIVIDADES_DATA02.dbf' SIZE 200M
+   '/unam/diplo-bd/proyecto-final/d08/TS_ACTIVIDADES_DATA01.dbf' SIZE 200M,
+   '/unam/diplo-bd/proyecto-final/d09/TS_ACTIVIDADES_DATA02.dbf' SIZE 200M
   AUTOEXTEND ON NEXT 50M MAXSIZE 4G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 8M
   SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE TS_ACTIVIDADES_IDX
   DATAFILE
-    '/unam/diplo-bd/proyecto-final/d08/TS_ACTIVIDADES_IDX01.dbf' SIZE 100M,
-    '/unam/diplo-bd/proyecto-final/d09/TS_ACTIVIDADES_IDX02.dbf' SIZE 100M
+   '/unam/diplo-bd/proyecto-final/d08/TS_ACTIVIDADES_IDX01.dbf' SIZE 100M,
+   '/unam/diplo-bd/proyecto-final/d09/TS_ACTIVIDADES_IDX02.dbf' SIZE 100M
   AUTOEXTEND ON NEXT 25M MAXSIZE 2G
   EXTENT MANAGEMENT LOCAL UNIFORM SIZE 4M
   SEGMENT SPACE MANAGEMENT AUTO;

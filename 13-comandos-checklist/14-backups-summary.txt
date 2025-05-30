@@ -1,0 +1,8 @@
+rman:
+list backup summary
+list backup
+list backup by file
+list backup copy
+
+delete obsolete
+report obsolete

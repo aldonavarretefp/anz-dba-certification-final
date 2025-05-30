@@ -1,0 +1,27 @@
+col "Ubicación del archivo" format a40;
+
+SELECT 
+    l.GROUP# "Grupo",
+    l.THREAD# "Hilo",
+    l.SEQUENCE# "Secuencia",
+    l.MEMBERS "Miembros",
+    l.ARCHIVED "Archivado",
+    l.STATUS "Estado",
+    f.MEMBER "Ubicación del archivo",
+    ROUND(l.BYTES/1024/1024,2) "Tamaño (MB)",
+    l.CON_ID "ID Contenedor"
+FROM 
+    V$LOG l
+JOIN 
+    V$LOGFILE f ON l.GROUP# = f.GROUP#
+ORDER BY 
+    l.GROUP#, f.MEMBER;
+
+SELECT 
+    GROUP# "Grupo",
+    MEMBER "Ubicación del Redo Log",
+    STATUS "Estado"
+FROM 
+    V$LOGFILE
+ORDER BY 
+    GROUP#, MEMBER;

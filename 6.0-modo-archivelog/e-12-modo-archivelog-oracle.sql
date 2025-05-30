@@ -24,10 +24,10 @@ alter system set log_archive_max_processes=2 scope=spfile;
 Prompt D. Configurando 2 copias, una en el disco 1 y otra en la FRA
 define proyecto_final_dir='/unam/diplo-bd/proyecto-final'
 alter system set log_archive_dest_1='LOCATION=/unam/diplo-bd/proyecto-final/archive-logs/FREE/disk_a MANDATORY' scope=spfile;
-alter system set log_archive_dest_2='LOCATION=USE_DB_RECOVERY_FILE_DEST' scope=both;
+alter system set log_archive_dest_2='LOCATION=USE_DB_RECOVERY_FILE_DEST' scope=both; -- verificar fra
 
 Prompt E. Configurando formato
-define log_archive_format = 'arch_naproynu_%t_%s_%r.arc'
+define log_archive_format = 'arch_anz_%t_%s_%r.arc'
 alter system set log_archive_format='&log_archive_format' scope=spfile;
 
 Prompt F. Al menos una copia de debe generar 

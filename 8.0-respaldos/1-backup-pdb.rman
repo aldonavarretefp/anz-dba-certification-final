@@ -1,0 +1,6 @@
+rman target /
+o rman target sys@alias
+
+run {
+    backup database;
+}

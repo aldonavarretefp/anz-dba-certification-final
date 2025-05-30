@@ -1,0 +1,17 @@
+SELECT 
+    name AS "Parámetro",
+    value AS "Valor Configurado",
+    display_value AS "Valor Mostrado",
+    description AS "Descripción"
+FROM 
+    v$parameter 
+WHERE 
+    name IN ('db_recovery_file_dest', 'db_recovery_file_dest_size')
+UNION ALL
+SELECT
+    'FRA Space Usage' AS "Parámetro",
+    TO_CHAR(ROUND(space_used/1024/1024/1024,2)) || ' GB' AS "Valor Configurado",
+    TO_CHAR(ROUND(space_limit/1024/1024/1024,2)) || ' GB' AS "Valor Mostrado",
+    'Espacio usado de ' || ROUND(space_used/space_limit*100,2) || '%' AS "Descripción"
+FROM 
+    v$recovery_file_dest;

@@ -1,0 +1,6 @@
+
+Backupset una copia en la fra y otra fuera de la fra
+RMAN> BACKUP AS BACKUPSET 
+      DATABASE 
+      PLUS ARCHIVELOG 
+      FORMAT '/path/to/external/location/%U', '+FRA';

@@ -1,0 +1,46 @@
+Prompt L. Consultando detalle de los archive redo logs
+col name format a70 
+select name,dest_id, sequence#,status from v$archived_log;
+
+col "Ubicación del Archive Log" format a100;
+SELECT 
+    name AS "Ubicación del Archive Log",
+    sequence# AS "Número de Secuencia",
+    thread# AS "Hilo",
+    completion_time AS "Fecha/Hora de Creación",
+    ROUND(blocks * block_size/1024/1024, 2) AS "Tamaño (MB)",
+    archived AS "Archivado",
+    status AS "Estado",
+    dest_id AS "ID Destino"
+FROM 
+    v$archived_log
+ORDER BY 
+    completion_time DESC;
+
+Rutas
+SELECT 
+    DISTINCT SUBSTR(name, 1, INSTR(name, '/', -1)) AS "Directorio de Archive Logs",
+    COUNT(*) OVER (PARTITION BY SUBSTR(name, 1, INSTR(name, '/', -1))) AS "Cantidad de Archivos",
+    MIN(completion_time) OVER (PARTITION BY SUBSTR(name, 1, INSTR(name, '/', -1))) AS "Primer Archivo",
+    MAX(completion_time) OVER (PARTITION BY SUBSTR(name, 1, INSTR(name, '/', -1))) AS "Último Archivo"
+FROM 
+    v$archived_log
+WHERE 
+    name IS NOT NULL;
+
+FRA
+
+SELECT 
+    name AS "Ubicación del Archive Log",
+    sequence# AS "Secuencia",
+    completion_time AS "Fecha de Creación",
+    CASE 
+        WHEN name LIKE '%fast_recovery_area%' THEN 'YES' 
+        ELSE 'NO' 
+    END AS "En FRA"
+FROM 
+    v$archived_log
+WHERE 
+    name IS NOT NULL
+ORDER BY 
+    completion_time DESC;
