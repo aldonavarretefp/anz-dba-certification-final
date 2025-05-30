@@ -1,119 +1,51 @@
-/*=====================================================================
-  export_all.sql
-  ----------------
-  Exporta **TODAS** las tablas de los dos módulos a CSV, sobrescribiendo
-  archivos anteriores.  Uso recomendado con *sqlcl* (o SQL*Plus 19c+).
+/* ===================================================================
+   export_every_table.sql
+   -------------------------------------------------------------------
+   Ejecuta así (ejemplo módulo 1):
+     sqlplus -S tvac_mod1_app/mypwd@TVAC_MOD1 @export_every_table.sql
 
-  $ sql -S user/password@TNS @export_all.sql
-=====================================================================*/
+   Vuelve a ejecutarlo con tvac_mod2_app para el Módulo 2.
+   El directorio /tmp/exports/<schema> se crea y se sobreescribe
+   cada archivo .csv si ya existía.
+   ===================================================================*/
 
-------------------------------------------------------------------------
--- CONFIGURACIÓN GENERAL
-------------------------------------------------------------------------
-DEF base_dir  = '/tmp/exports'        -- directorio raíz en tu máquina
-DEF mod1_dir  = '&base_dir/MOD1'
-DEF mod2_dir  = '&base_dir/MOD2'
+-- 0) AJUSTAR: destino raíz
+DEFINE BASE_DIR = '/tmp/exports'
 
+-- 1) Obtener el nombre del esquema actual
+COLUMN user_name NEW_VALUE SCHEMA
+SELECT LOWER(USER) AS user_name FROM dual;
+
+-- 2) Crear carpeta y limpiar CSV anteriores
+HOST mkdir -p &BASE_DIR/&SCHEMA
+HOST rm -f  &BASE_DIR/&SCHEMA/*.csv
+
+-- 3) Configuración CSV
 SET HEADING ON
 SET FEEDBACK OFF
 SET PAGESIZE 0
 SET TRIMS ON
-SET VERIFY OFF
-SET ECHO OFF
+SET VERIFY   OFF
 SET MARKUP CSV ON
 
--- crea carpetas y limpia CSV anteriores
-HOST mkdir -p &mod1_dir
-HOST mkdir -p &mod2_dir
-HOST rm -f  &mod1_dir/*.csv
-HOST rm -f  &mod2_dir/*.csv
+PROMPT === Exportando tablas del esquema &SCHEMA ===
 
-------------------------------------------------------------------------
--- LISTA DE TABLAS POR MÓDULO  (ajusta si cambiaste nombres)
-------------------------------------------------------------------------
--- MÓDULO 1
-COLUMN t1 NEW_VALUE tbl
-DEFINE mod1_tables = '
-ASOCIACION
-CENTRO_VACACIONAL
-EMPLEADO
-LIDER
-CENTRO_LIDER
-CERTIFICACION
-CERTIFICACION_VERSION
-LIDER_CERTIFICACION
-TIPO_DEPORTE
-TIPO_JUEGO
-ACTIVIDAD
-IMAGEN_ACTIVIDAD
-ACTIVIDAD_CAMPAMENTO
-ACTIVIDAD_DEPORTE
-ACTIVIDAD_JUEGO'
-
--- MÓDULO 2
-DEFINE mod2_tables = '
-CLIENTE
-AUTO_CLIENTE
-INVITADO
-ESTADO_MEMBRESIA
-TARJETA
-CLIENTE_MEMBRESIA
-HISTORIAL_MEMBRESIA
-VISITA_CLIENTE
-VISITA_INVITADO
-ACTIVIDAD_PARTICIPACION'
-
-------------------------------------------------------------------------
--- MACRO PARA SPOOL ⇒ CSV
-------------------------------------------------------------------------
-DEFINE spool_csv = "
-SPOOL &1/&2..csv
-SELECT * FROM &2;
+-- 4) Generar dinámicamente un bloque spool por tabla
+SET TERMOUT OFF
+SPOOL gen_spool.sql
+SELECT
+      'SPOOL &BASE_DIR/&SCHEMA/'||LOWER(table_name)||'.csv'            ||CHR(10)||
+      'SELECT * FROM '||table_name||';'                                ||CHR(10)||
+      'SPOOL OFF'                                                      ||CHR(10)
+FROM   user_tables
+ORDER  BY table_name;
 SPOOL OFF
-"
+SET TERMOUT ON
 
-------------------------------------------------------------------------
--- ========== EXPORTAR MÓDULO 1 ==========
-------------------------------------------------------------------------
-PROMPT === Exportando MÓDULO 1 a &mod1_dir ===
-BEGIN NULL; END; /
--- loop “manual” (sql*plus no tiene for-each, usamos sustituciones)
--- cada llamada:  &spool_csv  <dir>  <tabla>
-@@?spool_csv &mod1_dir ASOCIACION
-@@?spool_csv &mod1_dir CENTRO_VACACIONAL
-@@?spool_csv &mod1_dir EMPLEADO
-@@?spool_csv &mod1_dir LIDER
-@@?spool_csv &mod1_dir CENTRO_LIDER
-@@?spool_csv &mod1_dir CERTIFICACION
-@@?spool_csv &mod1_dir CERTIFICACION_VERSION
-@@?spool_csv &mod1_dir LIDER_CERTIFICACION
-@@?spool_csv &mod1_dir TIPO_DEPORTE
-@@?spool_csv &mod1_dir TIPO_JUEGO
-@@?spool_csv &mod1_dir ACTIVIDAD
-@@?spool_csv &mod1_dir IMAGEN_ACTIVIDAD
-@@?spool_csv &mod1_dir ACTIVIDAD_CAMPAMENTO
-@@?spool_csv &mod1_dir ACTIVIDAD_DEPORTE
-@@?spool_csv &mod1_dir ACTIVIDAD_JUEGO
+-- 5) Ejecutar los spools generados
+@@gen_spool.sql
+HOST rm -f gen_spool.sql   -- limpia archivo temporal
 
-------------------------------------------------------------------------
--- ========== EXPORTAR MÓDULO 2 ==========
-------------------------------------------------------------------------
-PROMPT === Exportando MÓDULO 2 a &mod2_dir ===
-BEGIN NULL; END; /
-@@?spool_csv &mod2_dir CLIENTE
-@@?spool_csv &mod2_dir AUTO_CLIENTE
-@@?spool_csv &mod2_dir INVITADO
-@@?spool_csv &mod2_dir ESTADO_MEMBRESIA
-@@?spool_csv &mod2_dir TARJETA
-@@?spool_csv &mod2_dir CLIENTE_MEMBRESIA
-@@?spool_csv &mod2_dir HISTORIAL_MEMBRESIA
-@@?spool_csv &mod2_dir VISITA_CLIENTE
-@@?spool_csv &mod2_dir VISITA_INVITADO
-@@?spool_csv &mod2_dir ACTIVIDAD_PARTICIPACION
-
-PROMPT =============================
-PROMPT ✅  Exportación completada.
-PROMPT Archivos CSV en: &base_dir
-PROMPT =============================
+PROMPT === CSV listos en &BASE_DIR/&SCHEMA ===
 EXIT
 
