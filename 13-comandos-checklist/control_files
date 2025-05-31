@@ -1,0 +1,10 @@
+show parameter control_files;
+
+SELECT
+    NAME AS path,
+    BLOCK_SIZE,
+    FILE_SIZE_BLKS
+FROM
+    V$CONTROLFILE
+ORDER BY
+    NAME;
